@@ -1,0 +1,15 @@
+{
+  auto_https off
+  admin off
+}
+:{$PORT} {
+  reverse_proxy {$UPSTREAM} {
+    header_up Host {http.reverse_proxy.upstream.hostport}
+    header_up X-Forwarded-Host {host}
+    header_up X-Forwarded-Proto {scheme}
+    transport http {
+      tls
+      tls_server_name {http.reverse_proxy.upstream.host}
+    }
+  }
+}

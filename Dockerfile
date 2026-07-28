@@ -1,5 +1,7 @@
-FROM caddy:2-alpine
-COPY Caddyfile /etc/caddy/Caddyfile
-# Render sets PORT; Caddyfile uses {$PORT}
+FROM node:20-alpine
+WORKDIR /app
+COPY package.json server.js ./
+ENV NODE_ENV=production
 ENV PORT=10000
-CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+EXPOSE 10000
+CMD ["node", "server.js"]
